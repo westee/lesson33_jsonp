@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>访问另一个网站的js</title>
+</head>
+
+<body>
+    <span id="amount">&&&amount&&&</span>
+  <button id="button">click</button>
+  <script>
+    window.xxx = function(result){
+      if(result === 'success'){
+        amount.innerText = amount.innerText - 1;
+      }else{
+        console.log('fail');
+      }
+      
+    }
+    button.addEventListener('click', (e) => {
+      let script = document.createElement('script');
+      script.src = "http://localhost:9999/pay?callbackName=xxx";
+      document.body.appendChild(script);
+
+      script.onload = function (e) {
+        e.currentTarget.remove(); //完事移除掉script标签
+      }
+      script.onerror = function () {
+        alert('fail');
+        e.currentTarget.remove();
+      }
+    })
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script src="http://localhost:8888/"></script> -->
+</body>
+
+</html>
